@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>To Do List</title>
+</head>
+<body>
+    <section class="container">
+        <div class="to-do__list">
+            <h1><img class="title__img" src="./images/icon-notepad.png" alt="icon-notepad">My Tasks</h1>
+            <div class="form">
+                <span><img src="./images/plus_white.png" alt="plus_white">Add task</span>
+                <input type="text" id="inputText" value="" placeholder="Try typing...">
+                <button id="addBtn">Add</button>
+            </div>
+            <ul class="tasks" id="tasks">
+            </ul>
+        </div>
+        <div class="container__no-task_empty">
+            <h1>No Task Definded</h1>
+            <ul class="list_no-task"></ul>
+        </div>
+        <div class="container__to-do_empty">
+            <h1>To Do</h1>
+            <ul class="list_to-do"></ul>
+        </div>
+        <div class="container__completed_empty">
+            <h1>Completed</h1>
+            <ul class="list_completed"></ul>
+        </div>
+    </section>
+    <script src="./todo.js"></script>
+</body>
+</html>
