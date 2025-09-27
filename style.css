@@ -103,7 +103,7 @@
     cursor: pointer;
     position: relative;
 
-    &::before {
+    /* &::before {
         content: "";
         position: absolute;
         height: 20px;
@@ -111,24 +111,23 @@
         border-radius: 50%;
         border: 2px solid #253a82;
         left: 10px;
-    }
+    } */
 }
 
-.list_no-task li.checked,
+.list_no-task li.checked, 
 .list_to-do li.checked,
 .list_completed li.checked,
 .tasks li.checked {
     color: #253a82;
     text-decoration: line-through;
+    
 
     &::before {
         content: "";
         position: absolute;
         height: 20px;
         width: 20px;
-        border-radius: 50%;
-        border: 2px solid #253a82;
-        background-image: url("./images/checkmark.png");
+        background-image: url("./images/checkmark_blue.png");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -136,10 +135,39 @@
     }
 }
 
-.list_no-task li button,
-.list_to-do li button,
-.list_completed li button,
-.tasks li button {
+.list_no-task .btn__checked,
+.list_to-do .btn__checked,
+.list_completed .btn__checked,
+.tasks .btn__checked {
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    border: 2px solid #253a82;
+    background-color: transparent;
+    /* background-image: url("./images/checkmark_blue.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center; */
+    cursor: pointer;
+    left: 10px;
+
+    &:hover {
+        background-color: #253a82;
+        background-image: url("./images/checkmark_white.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+
+        transition: 0.3s;
+    }
+}
+
+.list_no-task .btn__delete,
+.list_to-do .btn__delete,
+.list_completed .btn__delete,
+.tasks .btn__delete {
     position: absolute;
     height: 23px;
     width: 23px;
