@@ -1,11 +1,12 @@
 const inputText = document.getElementById("inputText")
 const addBtn = document.getElementById("addBtn")
 const tasks = document.getElementById("tasks")
-const noTaskContainer = document.querySelector(".list_no-task")
 const toDoTaskContainer = document.querySelector(".list_to-do")
 const completedTaskContainer = document.querySelector(".list_completed")
 
-const noTaskContainerTitle = document.querySelector(".container__no-task_empty")
+const all = document.getElementById("filteredAllTasks");
+const completed = document.getElementById("filteredCompletedTasks");
+const inProgress = document.getElementById("filteredInProgressTasks");
 
 
 const taskList = []
@@ -86,12 +87,6 @@ function deleteTask (task) {
 
 
 addBtn.addEventListener('click', addTask);
-
-
-const all = document.getElementById("filteredAllTasks");
-const completed = document.getElementById("filteredCompletedTasks");
-const inProgress = document.getElementById("filteredInProgressTasks");
-
 
 all.addEventListener('click', function () {
     sync('all');
