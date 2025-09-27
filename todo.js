@@ -1,8 +1,6 @@
 const inputText = document.getElementById("inputText")
 const addBtn = document.getElementById("addBtn")
-const tasks = document.getElementById("tasks")
-const toDoTaskContainer = document.querySelector(".list_to-do")
-const completedTaskContainer = document.querySelector(".list_completed")
+const tasksContainer = document.getElementById("tasks")
 
 const all = document.getElementById("filteredAllTasks");
 const completed = document.getElementById("filteredCompletedTasks");
@@ -11,91 +9,84 @@ const inProgress = document.getElementById("filteredInProgressTasks");
 
 const taskList = []
 
-function addTask () { // функция создания новой таски
-    const textInput = inputText.value; //храню здесь значение инпута
-    if (inputText.value === "") return; // если значение инпута пустое, то выходим
+function addTask () {
+    const textInput = inputText.value;
+    if (inputText.value === "") return;
 
-    const newTask = { // создаем новую таску объектом
+    const newTask = { // создаем новую таску
         textInput, 
         status: false,
-        id: crypto.randomUUID() // генерим рандомный id
+        id: crypto.randomUUID()
     };
     
     taskList.push(newTask); // добавляем новую таску в массив
 
-    inputText.value = ""; // очищаем инпут
-    sync(); //вызываем основную функцию
+    inputText.value = "";
+    filtered(defaultFilter)
 }
 
-let filteredList = []; // Новый список, в который будут попадать отфильтрованные значения
-
-function createTask () { // отрисовка тасок
-    filteredList.forEach(task => {
-        const li = document.createElement("li"); //создаю li
-        li.textContent = task.textInput; //помещаем в li свойство передаваемого объекта (textInput) в качестве параметра task
-        toDoTaskContainer.appendChild(li); //добавляю созданную таску сразу в контейнер to do
-
-        const checkedBtn = document.createElement("button"); //кнопка выполнения таски
-        checkedBtn.className = 'btn__checked';
-        checkedBtn.addEventListener('click', function () { //при клике на checkedBtn меняем статус таски на true
-            task.status = true;
-            sync();
-        });
-
-        const deleteBtn = document.createElement("button"); //создаю кнопку удаления 
-        deleteBtn.className = 'btn__delete';
-        deleteBtn.addEventListener('click', function() {deleteTask(task)});
-
-        li.appendChild(checkedBtn);
-        li.appendChild(deleteBtn);
+function createTask (task, updateFilter) {
+    const li = document.createElement("li"); // создаю таску
+    li.textContent = task.textInput;
+    tasksContainer.appendChild(li);
     
-        if (task.status) {
-            completedTaskContainer.appendChild(li)
-            li.classList.add('checked')
-        } else {
-            toDoTaskContainer.appendChild(li);
-        }
+    const deleteBtn = document.createElement("button"); //создаю кнопку удаления 
+    deleteBtn.className = 'btn__delete';
+    deleteBtn.addEventListener('click', function() {
+        const index = taskList.findIndex((curr) => curr.id === task.id);
+        if (index !== -1) {
+            taskList.splice(index, 1);
+            updateFilter();
+        };
     });
-    
+
+    const checkedBtn = document.createElement("button"); //создаю кнопку выполнения таски
+    checkedBtn.className = 'btn__checked';
+    checkedBtn.addEventListener('click', function () { //выолненная таска - true
+        task.status = true;
+        updateFilter();
+    });
+
+    li.appendChild(checkedBtn); //добавляю кнопки в таску
+    li.appendChild(deleteBtn);
+
+    if (task.status) {
+        li.classList.add('checked') // добавляю состояние таске
+    }
+    return li;
 }
 
+function sync (filteredList, updateFilter) {
+    tasksContainer.innerHTML = ''; // очищаем ul
+    filteredList.forEach(task => {
+        const li = createTask(task, updateFilter);
+    });
+}
 
-function sync (filter = 'all') {
-    toDoTaskContainer.innerHTML = '';
-    completedTaskContainer.innerHTML = ''; //очищаем контейнеры, чтобы таски не дублировались каждый раз, когда мы проходимся по toDoTask
-
+let defaultFilter = 'all'
+let filteredList = []; // Новый список, в который будут попадать отфильтрованные значения
+function filtered (filter) {
     if (filter === "all") {
         filteredList = taskList;
     } else if (filter === "completed") {
-        filteredList = taskList.filter(task => task.status === true); //ранее ставили статус true если checked
+        filteredList = taskList.filter(task => task.status === true); //если checked
     } else if (filter === "inProgress") {
         filteredList = taskList.filter(task => task.status !== true);
     }
-
-    createTask();
-}
-
-
-function deleteTask (task) {
-    const index = taskList.findIndex((curr) => curr.id === task.id); //прохожусь по нашему массиву и ищу по нужному id
-    // если id которое мы принимаем, равно тому же id по которому проходимся в массиве, то сохраняю индекс на том моменте, где совпал id в переменную
-    if (index !== -1) { //если мы нашли подходящий индекс
-        taskList.splice(index, 1); //удаляю 1 элем из списка начиная с индекса, который нашли
-        sync();
-    };
+    sync(filteredList, () => filtered(filter)) //передаю call-back функцию
 }
 
 
 addBtn.addEventListener('click', addTask);
 
 all.addEventListener('click', function () {
-    sync('all');
+    filtered('all');
 });
 
 completed.addEventListener('click', function () {
-    sync('completed');
+    filtered('completed');
 });
 
 inProgress.addEventListener('click', function () {
-    sync('inProgress');
+    filtered('inProgress');
 });

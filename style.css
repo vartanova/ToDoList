@@ -10,9 +10,7 @@
     background-color: aliceblue;
     padding: 20px;
 }
-.container__no-task_empty,
-.container__to-do_empty,
-.container__completed_empty,
+
 .to-do__list {
     width: 100%;
     max-width: 600px;
@@ -124,9 +122,6 @@
     }
 }
 
-.list_no-task li,
-.list_to-do li,
-.list_completed li,
 .tasks li {
     list-style: none;
     color: #253a82;
@@ -137,16 +132,6 @@
     user-select: none; 
     cursor: pointer;
     position: relative;
-
-    /* &::before {
-        content: "";
-        position: absolute;
-        height: 20px;
-        width: 20px;
-        border-radius: 50%;
-        border: 2px solid #253a82;
-        left: 10px;
-    } */
 }
 
 .list_no-task li.checked, 
@@ -170,9 +155,6 @@
     }
 }
 
-.list_no-task .btn__checked,
-.list_to-do .btn__checked,
-.list_completed .btn__checked,
 .tasks .btn__checked {
     content: "";
     position: absolute;
@@ -181,10 +163,7 @@
     border-radius: 50%;
     border: 2px solid #253a82;
     background-color: transparent;
-    /* background-image: url("./images/checkmark_blue.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center; */
+
     cursor: pointer;
     left: 10px;
 
@@ -199,9 +178,6 @@
     }
 }
 
-.list_no-task .btn__delete,
-.list_to-do .btn__delete,
-.list_completed .btn__delete,
 .tasks .btn__delete {
     position: absolute;
     height: 23px;
@@ -220,27 +196,4 @@
         background-color: #c5c5c5c0;
         transition: 0.3s;
     }
-}
-
-.container__no-task_empty,
-.container__to-do_empty,
-.container__completed_empty {
-    min-height: auto;
-}
-
-
-.container__no-task_empty h1,
-.container__to-do_empty h1,
-.container__completed_empty h1 {
-    text-align: center;
-    color: #253a82;
-    font-size: 20px;
-    margin-bottom: 20px;
-}
-
-.container__no-task_empty ul li,
-.container__to-do_empty ul li,
-.container__completed_empty ul li {
-    list-style: none;
-
 }
