@@ -26,10 +26,8 @@ function addTask () { // функция создания новой таски
     sync(); //вызываем основную функцию
 }
 
-function sync () {
-    toDoTaskContainer.innerHTML = '';
-    completedTaskContainer.innerHTML = ''; //очищаем контейнеры, чтобы таски не дублировались каждый раз, когда мы проходимся по toDoTask
 
+function createTask () {
     taskList.forEach(task => {
         const li = document.createElement("li"); //создаю li
         li.textContent = task.textInput; //помещаем в li свойство передаваемого объекта (textInput) в качестве параметра task
@@ -56,6 +54,14 @@ function sync () {
             toDoTaskContainer.appendChild(li);
         }
     });
+    
+}
+
+
+function sync () {
+    toDoTaskContainer.innerHTML = '';
+    completedTaskContainer.innerHTML = ''; //очищаем контейнеры, чтобы таски не дублировались каждый раз, когда мы проходимся по toDoTask
+    createTask()
 }
 
 
@@ -72,3 +78,49 @@ function deleteTask (task) {
 addBtn.addEventListener('click', addTask);
 
 
+
+
+const all = document.getElementById("filteredAllTasks");
+const completed = document.getElementById("filteredCompletedTasks");
+const inProgress = document.getElementById("filteredInProgressTasks");
+
+all.addEventListener('click', function () {
+    taskList})
+
+completed.addEventListener('click', function () {
+    taskList.forEach((task) => task.status === true)
+})
+
+inProgress.addEventListener('click', function () {
+    taskList.forEach((task) => task.status !== true)
+})
+
+
+
+
+// let filteredTask = [];
+
+// function filteredTasks () {
+//     if (filteredTask === 'all') {
+//         taskList
+//     } else if (filteredTask === 'completed') {
+//         taskList.filter(task => task.status === true)
+//     } else if (filteredTask === 'inProgress') {
+//         taskList.filter(task => task.status === false)
+//     }
+// }
+
+// all.addEventListener('click', function () {
+//     filteredTask = 'all';
+//     sync();
+// });
+
+// completed.addEventListener('click', function () {
+//     filteredTask = 'completed';
+//     sync();
+// });
+
+// inProgress.addEventListener('click', function () {
+//     filteredTask = 'inProgress';
+//     sync();
+// });
