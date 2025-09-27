@@ -9,7 +9,14 @@
 <body>
     <section class="container">
         <div class="to-do__list">
-            <h1><img class="title__img" src="./images/icon-notepad.png" alt="icon-notepad">My Tasks</h1>
+            <div class="list__title">
+                <h1><img class="title__img" src="./images/icon-notepad.png" alt="icon-notepad">My Tasks</h1>
+                <div class="list__filter">
+                    <button class="filter__btn all" id="filteredAllTasks" type="button">All</button>
+                    <button class="filter__btn completed" id="filteredCompletedTasks" type="button">Completed</button>
+                    <button class="filter__btn in-progress" id="filteredInProgressTasks" type="button">In Progress</button>
+                </div>
+            </div>
             <div class="form">
                 <span><img src="./images/plus_white.png" alt="plus_white">Add task</span>
                 <input type="text" id="inputText" value="" placeholder="Try typing...">

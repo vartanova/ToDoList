@@ -25,6 +25,41 @@
     margin-bottom: 20px;
 }
 
+.list__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.list__filter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 40%;
+}
+
+.filter__btn {
+    background-color: transparent;
+    border: 2px solid #253a82;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: #253a82;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #253a82;
+        color: white;
+        transition: 0.3s;
+    }
+
+    &:focus {
+        border-style: dashed;
+    }
+}
+
+
+
 .title__img {
     width: 40px;
     margin-right: 10px;
