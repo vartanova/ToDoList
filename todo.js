@@ -30,56 +30,46 @@ function sync () {
     toDoTaskContainer.innerHTML = '';
     completedTaskContainer.innerHTML = ''; //очищаем контейнеры, чтобы таски не дублировались каждый раз, когда мы проходимся по toDoTask
 
-    const toDoTask = taskList.filter(newTask => !newTask.status); //создаем переменную, где будем хранить таски, которые надо сделать (статус false)
-    const completedTask = taskList.filter(newTask => newTask.status); //создаем переменную с выполненными тасками (у которых true)
-
-    toDoTask.forEach(task => {
+    taskList.forEach(task => {
         const li = document.createElement("li"); //создаю li
         li.textContent = task.textInput; //помещаем в li свойство передаваемого объекта (textInput) в качестве параметра task
         toDoTaskContainer.appendChild(li); //добавляю созданную таску сразу в контейнер to do
 
         const checkedBtn = document.createElement("button"); //кнопка выполнения таски
         checkedBtn.className = 'btn__checked';
-        li.appendChild(checkedBtn);
-
         checkedBtn.addEventListener('click', function () { //при клике на checkedBtn меняем статус таски на true
             task.status = true;
-            li.classList.add('checked')
-            completedTaskContainer.appendChild(li); //добавляем ее в контейнер с выполненными тасками
-            completedTask.appendChild(li); //добавляю ее в список с выполненными тасками ... 
             sync();
         });
 
         const deleteBtn = document.createElement("button"); //создаю кнопку удаления 
         deleteBtn.className = 'btn__delete';
-        li.appendChild(deleteBtn); //добавляю ее в таску
+        deleteBtn.addEventListener('click', function() {deleteTask(task)});
 
-        function deleteTask () {
-            const index = taskList.findIndex((curr) => curr.id === task.id); //прохожусь по нашему массиву и ищу по нужному id
-            // если id которое мы принимаем, равно тому же id по которому проходимся в массиве, то сохраняю индекс на том моменте, где совпал id в переменную
-            if (index !== -1) { //если мы нашли подходящий индекс
-            taskList.splice(index, 1); //удаляю 1 элем из списка начиная с индекса, который нашли
-            sync();
-            };
-        }
-
-        deleteBtn.addEventListener('click', deleteTask);
-    });
-
-    completedTask.forEach (taskDone => {
-        const li = document.createElement("li");
-        completedTaskContainer.appendChild(li);
-        li.textContent = taskDone.textInput;
         li.appendChild(checkedBtn);
         li.appendChild(deleteBtn);
+    
+        if (task.status) {
+            completedTaskContainer.appendChild(li)
+            li.classList.add('checked')
+        } else {
+            toDoTaskContainer.appendChild(li);
+        }
     });
 }
 
+
+function deleteTask (task) {
+    const index = taskList.findIndex((curr) => curr.id === task.id); //прохожусь по нашему массиву и ищу по нужному id
+    // если id которое мы принимаем, равно тому же id по которому проходимся в массиве, то сохраняю индекс на том моменте, где совпал id в переменную
+    if (index !== -1) { //если мы нашли подходящий индекс
+        taskList.splice(index, 1); //удаляю 1 элем из списка начиная с индекса, который нашли
+        sync();
+    };
+}
+
+
 addBtn.addEventListener('click', addTask);
-
-// function deleteTask () {
-
-// }
 
 
 
