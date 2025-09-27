@@ -26,9 +26,10 @@ function addTask () { // функция создания новой таски
     sync(); //вызываем основную функцию
 }
 
+let filteredList = []; // Новый список, в который будут попадать отфильтрованные значения
 
-function createTask () {
-    taskList.forEach(task => {
+function createTask () { // отрисовка тасок
+    filteredList.forEach(task => {
         const li = document.createElement("li"); //создаю li
         li.textContent = task.textInput; //помещаем в li свойство передаваемого объекта (textInput) в качестве параметра task
         toDoTaskContainer.appendChild(li); //добавляю созданную таску сразу в контейнер to do
@@ -58,10 +59,19 @@ function createTask () {
 }
 
 
-function sync () {
+function sync (filter = 'all') {
     toDoTaskContainer.innerHTML = '';
     completedTaskContainer.innerHTML = ''; //очищаем контейнеры, чтобы таски не дублировались каждый раз, когда мы проходимся по toDoTask
-    createTask()
+
+    if (filter === "all") {
+        filteredList = taskList;
+    } else if (filter === "completed") {
+        filteredList = taskList.filter(task => task.status === true); //ранее ставили статус true если checked
+    } else if (filter === "inProgress") {
+        filteredList = taskList.filter(task => task.status !== true);
+    }
+
+    createTask();
 }
 
 
@@ -78,49 +88,19 @@ function deleteTask (task) {
 addBtn.addEventListener('click', addTask);
 
 
-
-
 const all = document.getElementById("filteredAllTasks");
 const completed = document.getElementById("filteredCompletedTasks");
 const inProgress = document.getElementById("filteredInProgressTasks");
 
+
 all.addEventListener('click', function () {
-    taskList})
+    sync('all');
+});
 
 completed.addEventListener('click', function () {
-    taskList.forEach((task) => task.status === true)
-})
+    sync('completed');
+});
 
 inProgress.addEventListener('click', function () {
-    taskList.forEach((task) => task.status !== true)
-})
-
-
-
-
-// let filteredTask = [];
-
-// function filteredTasks () {
-//     if (filteredTask === 'all') {
-//         taskList
-//     } else if (filteredTask === 'completed') {
-//         taskList.filter(task => task.status === true)
-//     } else if (filteredTask === 'inProgress') {
-//         taskList.filter(task => task.status === false)
-//     }
-// }
-
-// all.addEventListener('click', function () {
-//     filteredTask = 'all';
-//     sync();
-// });
-
-// completed.addEventListener('click', function () {
-//     filteredTask = 'completed';
-//     sync();
-// });
-
-// inProgress.addEventListener('click', function () {
-//     filteredTask = 'inProgress';
-//     sync();
-// });
+    sync('inProgress');
+});
