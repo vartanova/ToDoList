@@ -43,7 +43,7 @@ function createTask (task, updateFilter) {
     const checkedBtn = document.createElement("button"); //создаю кнопку выполнения таски
     checkedBtn.className = 'btn__checked';
     checkedBtn.addEventListener('click', function () { //выолненная таска - true
-        task.status = true;
+        task.status = !task.status;
         updateFilter();
     });
 
@@ -52,6 +52,8 @@ function createTask (task, updateFilter) {
 
     if (task.status) {
         li.classList.add('checked') // добавляю состояние таске
+    } else {
+        li.classList.add('unchecked')
     }
     return li;
 }

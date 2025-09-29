@@ -122,7 +122,8 @@
     }
 }
 
-.tasks li {
+.tasks li,
+.unchecked{
     list-style: none;
     color: #253a82;
     padding: 10px 40px;
@@ -134,9 +135,6 @@
     position: relative;
 }
 
-.list_no-task li.checked, 
-.list_to-do li.checked,
-.list_completed li.checked,
 .tasks li.checked {
     color: #253a82;
     text-decoration: line-through;
