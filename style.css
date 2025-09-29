@@ -20,23 +20,25 @@
 .to-do__list h1{
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
 }
 
 .list__title {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 20px;
 }
 
-.list__filter {
+.list__filter-btns {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 40%;
+    width: auto;
+    column-gap: 10px;
+    margin-bottom: 10px;
 }
 
-.filter__btn {
+.btn_light {
     background-color: transparent;
     border: 2px solid #253a82;
     border-radius: 5px;
@@ -56,7 +58,33 @@
     }
 }
 
+.btns__btn_delete {
+    display: flex;
+    column-gap: 10px;
+    justify-content: end;
+}
 
+.btn_dark {
+    background-color: #253a82;
+    border: 2px solid #253a82;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+        background-color: transparent;
+        color: #253a82;
+        border: 2px solid #253a82;
+        transition: 0.3s;
+    }
+    &:active {
+        background-color: brown;
+        color: white;
+    }
+
+}
 
 .title__img {
     width: 40px;
