@@ -20,23 +20,84 @@
 .to-do__list h1{
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
 }
 
 .list__title {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    align-items: center;
+    column-gap: 10px;
+    margin-bottom: 20px;
 }
 
 .list__filter {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 40%;
+    width: auto;
+    margin-bottom: 10px;
+    column-gap: 10px;
 }
 
-.filter__btn {
+
+.burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    height: 15px;
+    width: 30px;
+  }
+  
+.burger span {
+    height: 2px;
+    width: 20px;
+    border-radius: 5px;
+    background-color: #253a82;
+    position: relative;
+    z-index: 1;
+}
+  
+.burger::before,
+.burger::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 20px;
+    border-radius: 5px;
+    background-color: #253a82;
+    transition: 0.3s;
+}
+
+.burger::before {
+    top: 0;
+}
+.burger::after {
+    bottom: 0;
+}
+
+.burger.active span {
+    transform: scale(0);
+}
+.burger.active::before {
+    top: 50%;
+    transform: rotate(-45deg);
+}
+.burger.active::after {
+    top: 50%;
+    transform: rotate(45deg);
+}
+
+
+.burger-menu__lists-btn {
+    display: none;
+}
+
+.btn_light,
+.btn-menu_light {
     background-color: transparent;
     border: 2px solid #253a82;
     border-radius: 5px;
@@ -56,7 +117,34 @@
     }
 }
 
+.btns__delete {
+    display: flex;
+    justify-content: end;
+}
 
+.btn_dark,
+.btn-menu_dark {
+    background-color: #253a82;
+    border: 2px solid #253a82;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+        background-color: transparent;
+        color: #253a82;
+        transition: 0.3s;
+    }
+    &:active {
+        background-color: brown;
+        color: white;
+    }
+    &:focus {
+        border-style: dashed;
+    }
+}
 
 .title__img {
     width: 40px;
@@ -68,6 +156,7 @@
     align-items: center;
     justify-content: space-between;
     background-color: #253a82;
+    column-gap: 10px;
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 20px;
@@ -88,21 +177,16 @@
     flex: 1;
     border: none;
     outline: none;
+    border-bottom: 1px solid white;
     background-color: transparent;
     color: white;
     caret-color: white;
-    padding: 5px 20px;
+    padding: 5px 10px;
 
     &::placeholder {
         color: white;
-        opacity: 0;
         transition: opacity 0.2s;
     }
-}
-
-.form input:focus::placeholder {
-    opacity: 1;
-
 }
 
 .form button {
@@ -195,3 +279,53 @@
         transition: 0.3s;
     }
 }
+
+.open {
+    display: flex !important;
+}
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 1.25em;
+    }
+    .btn_light,
+    .btn_dark {
+        font-size: 0.75em;
+    }
+    
+}
+
+@media screen and (max-width: 410px) {
+    .burger {
+        display: flex;
+    }
+
+    .btn_light,
+    .btn_dark,
+    .form span {
+        display: none;
+    }
+    
+    .burger-menu__lists-btn {
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        z-index: 100;
+        background-color: aliceblue;
+        width: 100%;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 50px;
+        overflow-y: auto;
+        animation: burgerAnimation 0.3s;
+    }
+    .burger-menu__item {
+        width: 50%;
+    }
+}
+
+
+@keyframes burgerAnimation {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
