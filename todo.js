@@ -2,17 +2,29 @@ const inputText = document.getElementById("inputText")
 const addBtn = document.getElementById("addBtn")
 const tasksContainer = document.getElementById("tasks")
 
+const burger = document.querySelector('.burger')
+const burgerItem = document.querySelector('.burger-menu__lists-btn')
+
 const all = document.getElementById("filteredAllTasks");
 const completed = document.getElementById("filteredCompletedTasks");
 const inProgress = document.getElementById("filteredInProgressTasks");
-const deleteAll = document.getElementById("deleteAllTasks");
+const deleteAll = document.getElementById('deleteAllTasks')
+
+burger.addEventListener ('click', function () {
+    this.classList.toggle('active');
+    burgerItem.classList.toggle('open');
+})
+
 
 
 const taskList = []
 
 function addTask () {
     const textInput = inputText.value;
-    if (inputText.value === "") return;
+    if (inputText.value === "") {
+        alert('Введите таску')
+        return
+    };
 
     const newTask = { // создаем новую таску
         textInput, 
@@ -66,7 +78,7 @@ function sync (filteredList, updateFilter) {
     });
 }
 
-let defaultFilter = 'all'
+let defaultFilter = 'all'  //по умолчанию пусть стоит фильтр all
 let filteredList = []; // Новый список, в который будут попадать отфильтрованные значения
 function filtered (filter) {
     if (filter === "all") {
@@ -95,7 +107,7 @@ inProgress.addEventListener('click', function () {
 });
 
 deleteAll.addEventListener('click', function() {
-    const filteredCurr = filteredList.map(task => task.id); //только те таски, которые отобразились при фильтрации
+    const filteredCurr = filteredList.map(task => task.id); //только те таски, которые отобразились при конкретной фильтрации
     for (let i = taskList.length - 1; i >= 0; i--) {
         if (filteredCurr.includes(taskList[i].id)) {
             taskList.splice(i, 1); //удаляем из общего списка только те, которые нам нужны

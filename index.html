@@ -12,19 +12,28 @@
             <div class="list__title">
                 <h1><img class="title__img" src="./images/icon-notepad.png" alt="icon-notepad">My Tasks</h1>
                 <div class="btns">
-                    <div class="list__filter-btns">
+                    <div class="list__filter">
                         <button class="btn_light all" id="filteredAllTasks" type="button">All</button>
                         <button class="btn_light completed" id="filteredCompletedTasks" type="button">Completed</button>
                         <button class="btn_light in-progress" id="filteredInProgressTasks" type="button">In Progress</button>
                     </div>
-                    <div class="btns__btn_delete">
+                    <div class="btns__delete">
                         <button class="btn__delete-all btn_dark" id="deleteAllTasks" type="button">Delete All</button>
                     </div>
                 </div>
+                <div class="burger">
+                    <span></span>
+                </div>
+            </div>
+            <div class="burger-menu__lists-btn">
+                <button class="burger-menu__item btn-menu_light" id="filteredAllTasks" type="button">All</button>
+                <button class="burger-menu__item btn-menu_light" id="filteredCompletedTasks" type="button">Completed</button>
+                <button class="burger-menu__item btn-menu_light" id="filteredInProgressTasks" type="button">In Progress</button>
+                <button class="burger-menu__item btn-menu_dark" id="deleteAllTasks" type="button">Delete All</button>
             </div>
             <div class="form">
                 <span><img src="./images/plus_white.png" alt="plus_white">Add task</span>
-                <input type="text" id="inputText" value="" placeholder="Try typing...">
+                <input type="text" id="inputText" class="form__input" value="" placeholder="Try typing...">
                 <button id="addBtn">Add</button>
             </div>
             <ul class="tasks" id="tasks">
