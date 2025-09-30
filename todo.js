@@ -10,14 +10,15 @@ const completed = document.getElementById("filteredCompletedTasks");
 const inProgress = document.getElementById("filteredInProgressTasks");
 const deleteAll = document.getElementById('deleteAllTasks')
 
+const taskList = []
+let defaultFilter = 'all'  //по умолчанию пусть стоит фильтр all
+let filteredList = []; // Новый список, в который будут попадать отфильтрованные значения
+
+
 burger.addEventListener ('click', function () {
     this.classList.toggle('active');
     burgerItem.classList.toggle('open');
 })
-
-
-
-const taskList = []
 
 function addTask () {
     const textInput = inputText.value;
@@ -33,7 +34,7 @@ function addTask () {
     };
     
     taskList.push(newTask); // добавляем новую таску в массив
-
+    saveTasks();
     inputText.value = "";
     filtered(defaultFilter)
 }
@@ -49,6 +50,7 @@ function createTask (task, updateFilter) {
         const index = taskList.findIndex((curr) => curr.id === task.id);
         if (index !== -1) {
             taskList.splice(index, 1);
+            saveTasks();
             updateFilter();
         };
     });
@@ -57,6 +59,7 @@ function createTask (task, updateFilter) {
     checkedBtn.className = 'btn__checked';
     checkedBtn.addEventListener('click', function () { //выолненная таска - true
         task.status = !task.status;
+        saveTasks();
         updateFilter();
     });
 
@@ -78,8 +81,6 @@ function sync (filteredList, updateFilter) {
     });
 }
 
-let defaultFilter = 'all'  //по умолчанию пусть стоит фильтр all
-let filteredList = []; // Новый список, в который будут попадать отфильтрованные значения
 function filtered (filter) {
     if (filter === "all") {
         filteredList = taskList;
@@ -113,5 +114,27 @@ deleteAll.addEventListener('click', function() {
             taskList.splice(i, 1); //удаляем из общего списка только те, которые нам нужны
         }
     }
+    saveTasks();
     filtered(defaultFilter);
 });
+
+
+// Сохраняем весь список задач
+function saveTasks() {
+    localStorage.setItem('taskList', JSON.stringify(taskList));
+}
+
+function loadTasks() {
+    const saved = localStorage.getItem('taskList');
+    let savedTasks = []
+    if (saved) {
+        savedTasks = JSON.parse(saved)
+    } return savedTasks
+}
+
+function loadTaskToWindow () {
+    taskList.push(...loadTasks());
+    filtered(defaultFilter)
+}
+
+window.addEventListener('DOMContentLoaded', loadTaskToWindow )
