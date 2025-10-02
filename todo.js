@@ -10,6 +10,11 @@ const completed = document.getElementById("filteredCompletedTasks");
 const inProgress = document.getElementById("filteredInProgressTasks");
 const deleteAll = document.getElementById('deleteAllTasks')
 
+const modalWindow = document.getElementById('modalWindow')
+const closeModal = document.getElementById('closeModal')
+
+
+
 let taskList = []
 let defaultFilter = 'all'  //по умолчанию пусть стоит фильтр all
 let filteredList = []; // Новый список, в который будут попадать отфильтрованные значения
@@ -22,8 +27,10 @@ burger.addEventListener ('click', function () {
 
 function addTask () {
     const textInput = inputText.value;
+    modalWindow.classList.add('close');
+
     if (inputText.value === "") {
-        alert('Введите таску')
+        modalWindow.classList.add('open');
         return
     };
 
@@ -98,6 +105,10 @@ function filtered (filter) {
 }
 
 addBtn.addEventListener('click', addTask);
+
+closeModal.addEventListener('click', function () {
+    modalWindow.classList.remove('open');
+})
 
 all.addEventListener('click', function () {
     filtered('all');

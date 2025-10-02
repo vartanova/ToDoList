@@ -34,10 +34,17 @@
             <form class="form">
                 <span><img src="./images/plus_white.png" alt="plus_white">Add task</span>
                 <input type="text" id="inputText" class="form__input" value="" placeholder="Try typing...">
-                <button id="addBtn">Add</button>
+                <button type="button" id="addBtn">Add</button>
             </form>
             <ul class="tasks" id="tasks">
             </ul>
+        </div>
+        <div class="modal-window" id="modalWindow">
+            <div class="modal__content" id="modalContent">
+
+                <h1>Введите текст</h1>
+                <button class="modal__btn_close btn_dark" id="closeModal" type="button">Окей, отъебись</button>
+            </div>
         </div>
     </section>
     <script src="./todo.js"></script>

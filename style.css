@@ -11,6 +11,35 @@
     padding: 20px;
 }
 
+.modal-window {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(7px);
+    animation: animationOpacity 0.3s;
+
+}
+
+.modal__content {
+    position: fixed;
+    top: 2%;
+    left: 40%;
+    background-color: aliceblue;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 300px;
+    border: 2px solid #253a82;
+    padding: 20px 10px;
+    border-radius: 10px;
+}
+
 .to-do__list {
     width: 100%;
     max-width: 600px;
@@ -319,15 +348,21 @@
         align-items: center;
         margin-bottom: 50px;
         overflow-y: auto;
-        animation: burgerAnimation 0.3s;
+        animation: animationOpacity 0.3s;
     }
     .burger-menu__item {
         width: 50%;
     }
 }
 
+@media screen and (min-width: 410px){
+    .burger-menu__lists-btn {
+        display: none !important;
+    }   
+}
 
-@keyframes burgerAnimation {
+
+@keyframes animationOpacity {
     from {opacity: 0;}
     to {opacity: 1;}
 }
