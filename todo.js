@@ -34,12 +34,11 @@ function addTask () {
     };
     
     taskList.push(newTask); // добавляем новую таску в массив
-    saveTasksToLocalStorage();
     inputText.value = "";
-    filtered(defaultFilter)
+    filtered(defaultFilter);
 }
 
-function createTask (task, updateFilter) {
+function createTask (task) {
     const li = document.createElement("li"); // создаю таску
 
     li.textContent = task.textInput;
@@ -51,8 +50,7 @@ function createTask (task, updateFilter) {
         const index = taskList.findIndex((curr) => curr.id === task.id);
         if (index !== -1) {
             taskList.splice(index, 1);
-            saveTasksToLocalStorage();
-            updateFilter();
+            filtered(defaultFilter);
         };
     });
 
@@ -60,8 +58,7 @@ function createTask (task, updateFilter) {
     checkedBtn.className = 'btn__checked';
     checkedBtn.addEventListener('click', function () { // выолненная таска - true
         task.status = !task.status;
-        saveTasksToLocalStorage();
-        updateFilter();
+        filtered(defaultFilter);
     });
 
     li.appendChild(checkedBtn); // добавляю кнопки в таску
@@ -76,13 +73,14 @@ function createTask (task, updateFilter) {
     return li;
 }
 
-function sync (filteredList, updateFilter) {
+function sync (filteredList) {
     tasksContainer.innerHTML = ''; // очищаем ul
 
     filteredList.forEach(task => {
-        const li = createTask(task, updateFilter);
+        const li = createTask(task);
+        tasksContainer.appendChild(li);
     });
-    saveTasksToLocalStorage()
+    saveTasksToLocalStorage();
 }
 
 function filtered (filter) {
@@ -96,12 +94,8 @@ function filtered (filter) {
     } else if (filter === "inProgress") {
         filteredList = taskList.filter(task => !task.status);
     }
-    sync(filteredList, () => filtered(filter)) //передаю call-back функцию
-    saveTasksToLocalStorage();
-
+    sync(filteredList);
 }
-
-
 
 addBtn.addEventListener('click', addTask);
 
@@ -120,10 +114,8 @@ inProgress.addEventListener('click', function () {
 deleteAll.addEventListener('click', function () {
     const idFilteredTasks = filteredList.map(task => task.id); // получаем ID задач, которые нужно удалить
 
-    taskList = taskList.filter(task => !idFilteredTasks.includes(task.id) // всегда будет False тк у нас все id в списке idFilteredTasks, которые нужно удалить. значит все не попадут в filteredTasks
-    )
+    taskList = taskList.filter(task => !idFilteredTasks.includes(task.id)); // всегда будет False тк у нас все id в списке idFilteredTasks, которые нужно удалить. значит все не попадут в filteredTasks
 
-    saveTasksToLocalStorage();
     filtered(defaultFilter);
 });
 
@@ -150,4 +142,4 @@ function loadTasks() {
     filtered(takenFilter);
 }
 
-window.addEventListener('DOMContentLoaded', loadTasks)
+window.addEventListener('DOMContentLoaded', loadTasks);
