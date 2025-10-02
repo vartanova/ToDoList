@@ -235,28 +235,36 @@
     }
 }
 
-.tasks li{
+.unchecked,
+.checked{
     overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-bottom: 0;
+    padding-left: 2px;
     max-height: 150px;
 }
 
-/* .tasks li::-webkit-scrollbar {
-    width: 5px;
+.unchecked::-webkit-scrollbar,
+.checked::-webkit-scrollbar {
+    background-color: transparent;
+
+    width: 3px;
 
 }
 
-.tasks li::-webkit-scrollbar-thumb {
+.unchecked::-webkit-scrollbar-thumb,
+.checked::-webkit-scrollbar-thumb {
     background: #253a82;
     border-radius: 5px;
 }
-
-.tasks li::-webkit-scrollbar-track {
+.unchecked::-webkit-scrollbar-track,
+.checked::-webkit-scrollbar-track {
     background-color: transparent;
-} */
+}
 
 
-.tasks li,
-.unchecked{
+.wrapperMainContainer{
     display: flex;
     align-items: center;
     list-style: none;
@@ -265,14 +273,30 @@
     padding: 10px 40px;
     border: 2px solid #253a82;
     border-radius: 10px;
-    margin-bottom: 10px;
+
     user-select: none; 
     cursor: pointer;
     position: relative;
+    /* &::before {
+        content: "";
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        background-image: url("./images/checkmark_blue.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        left: 10px;
+    } */
 
 }
+.tasks {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px !important;
+}
 
-.tasks li.checked {
+.checked {
     color: #253a82;
     text-decoration: line-through;
     
@@ -284,12 +308,13 @@
         background-image: url("./images/checkmark_blue.png");
         background-repeat: no-repeat;
         background-size: cover;
-        background-position: center;
+        background-position: center center;
         left: 10px;
     }
 }
 
-.tasks .btn__checked {
+
+.btn__checked {
     content: "";
     position: absolute;
     height: 20px;
@@ -311,7 +336,7 @@
     }
 }
 
-.tasks .btn__delete {
+.btn__delete {
     position: absolute;
     height: 23px;
     width: 23px;

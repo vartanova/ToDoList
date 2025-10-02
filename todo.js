@@ -27,7 +27,6 @@ burger.addEventListener ('click', function () {
 
 function addTask () {
     const textInput = inputText.value;
-    modalWindow.classList.add('close');
 
     if (inputText.value === "") {
         modalWindow.classList.add('open');
@@ -46,10 +45,14 @@ function addTask () {
 }
 
 function createTask (task) {
-    const li = document.createElement("li"); // создаю таску
+
+    const wrapperMainContainer = document.createElement("div")
+    wrapperMainContainer.classList.add('wrapperMainContainer')
+    
+    const li = document.createElement("div"); // создаю таску
 
     li.textContent = task.textInput;
-    tasksContainer.appendChild(li);
+    wrapperMainContainer.appendChild(li);
     
     const deleteBtn = document.createElement("button"); //создаю кнопку удаления 
     deleteBtn.className = 'btn__delete';
@@ -68,8 +71,8 @@ function createTask (task) {
         filtered(defaultFilter);
     });
 
-    li.appendChild(checkedBtn); // добавляю кнопки в таску
-    li.appendChild(deleteBtn);
+    wrapperMainContainer.appendChild(checkedBtn); // добавляю кнопки в таску
+    wrapperMainContainer.appendChild(deleteBtn);
 
     if (task.status) {
         li.classList.add('checked') // добавляю состояние таске
@@ -77,7 +80,7 @@ function createTask (task) {
         li.classList.add('unchecked')
     }
 
-    return li;
+    return wrapperMainContainer;
 }
 
 function sync (filteredList) {
