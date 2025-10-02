@@ -10,7 +10,7 @@ const completed = document.getElementById("filteredCompletedTasks");
 const inProgress = document.getElementById("filteredInProgressTasks");
 const deleteAll = document.getElementById('deleteAllTasks')
 
-const taskList = []
+let taskList = []
 let defaultFilter = 'all'  //по умолчанию пусть стоит фильтр all
 let filteredList = []; // Новый список, в который будут попадать отфильтрованные значения
 
@@ -34,13 +34,14 @@ function addTask () {
     };
     
     taskList.push(newTask); // добавляем новую таску в массив
-    saveTasks();
+    saveTasksToLocalStorage();
     inputText.value = "";
     filtered(defaultFilter)
 }
 
 function createTask (task, updateFilter) {
     const li = document.createElement("li"); // создаю таску
+
     li.textContent = task.textInput;
     tasksContainer.appendChild(li);
     
@@ -50,20 +51,20 @@ function createTask (task, updateFilter) {
         const index = taskList.findIndex((curr) => curr.id === task.id);
         if (index !== -1) {
             taskList.splice(index, 1);
-            saveTasks();
+            saveTasksToLocalStorage();
             updateFilter();
         };
     });
 
-    const checkedBtn = document.createElement("button"); //создаю кнопку выполнения таски
+    const checkedBtn = document.createElement("button"); // создаю кнопку выполнения таски
     checkedBtn.className = 'btn__checked';
-    checkedBtn.addEventListener('click', function () { //выолненная таска - true
+    checkedBtn.addEventListener('click', function () { // выолненная таска - true
         task.status = !task.status;
-        saveTasks();
+        saveTasksToLocalStorage();
         updateFilter();
     });
 
-    li.appendChild(checkedBtn); //добавляю кнопки в таску
+    li.appendChild(checkedBtn); // добавляю кнопки в таску
     li.appendChild(deleteBtn);
 
     if (task.status) {
@@ -71,26 +72,35 @@ function createTask (task, updateFilter) {
     } else {
         li.classList.add('unchecked')
     }
+
     return li;
 }
 
 function sync (filteredList, updateFilter) {
     tasksContainer.innerHTML = ''; // очищаем ul
+
     filteredList.forEach(task => {
         const li = createTask(task, updateFilter);
     });
+    saveTasksToLocalStorage()
 }
 
 function filtered (filter) {
+    defaultFilter = filter;
+    localStorage.setItem('filter', filter);
+
     if (filter === "all") {
         filteredList = taskList;
     } else if (filter === "completed") {
-        filteredList = taskList.filter(task => task.status === true); //если checked
+        filteredList = taskList.filter(task => task.status); //если checked
     } else if (filter === "inProgress") {
-        filteredList = taskList.filter(task => task.status !== true);
+        filteredList = taskList.filter(task => !task.status);
     }
     sync(filteredList, () => filtered(filter)) //передаю call-back функцию
+    saveTasksToLocalStorage();
+
 }
+
 
 
 addBtn.addEventListener('click', addTask);
@@ -107,34 +117,37 @@ inProgress.addEventListener('click', function () {
     filtered('inProgress');
 });
 
-deleteAll.addEventListener('click', function() {
-    const filteredCurr = filteredList.map(task => task.id); //только те таски, которые отобразились при конкретной фильтрации
-    for (let i = taskList.length - 1; i >= 0; i--) {
-        if (filteredCurr.includes(taskList[i].id)) {
-            taskList.splice(i, 1); //удаляем из общего списка только те, которые нам нужны
-        }
-    }
-    saveTasks();
+deleteAll.addEventListener('click', function () {
+    const idFilteredTasks = filteredList.map(task => task.id); // получаем ID задач, которые нужно удалить
+
+    taskList = taskList.filter(task => !idFilteredTasks.includes(task.id) // всегда будет False тк у нас все id в списке idFilteredTasks, которые нужно удалить. значит все не попадут в filteredTasks
+    )
+
+    saveTasksToLocalStorage();
     filtered(defaultFilter);
 });
 
 
 // Сохраняем весь список задач
-function saveTasks() {
+function saveTasksToLocalStorage() {
     localStorage.setItem('taskList', JSON.stringify(taskList));
 }
 
 function loadTasks() {
-    const saved = localStorage.getItem('taskList');
-    let savedTasks = []
-    if (saved) {
-        savedTasks = JSON.parse(saved)
-    } return savedTasks
+    const takenTasks = localStorage.getItem('taskList');
+    
+    let parsedTasks = [];
+
+    if (takenTasks) {
+        parsedTasks = JSON.parse(takenTasks)
+    }
+
+    taskList.length = 0;
+    taskList.push(...parsedTasks);
+
+    const takenFilter = localStorage.getItem('filter');
+
+    filtered(takenFilter);
 }
 
-function loadTaskToWindow () {
-    taskList.push(...loadTasks());
-    filtered(defaultFilter)
-}
-
-window.addEventListener('DOMContentLoaded', loadTaskToWindow )
+window.addEventListener('DOMContentLoaded', loadTasks)

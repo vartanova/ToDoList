@@ -206,9 +206,13 @@
     }
 }
 
+
 .tasks li,
 .unchecked{
+    display: flex;
+    align-items: center;
     list-style: none;
+    word-break: break-all;
     color: #253a82;
     padding: 10px 40px;
     border: 2px solid #253a82;
@@ -217,13 +221,13 @@
     user-select: none; 
     cursor: pointer;
     position: relative;
+
 }
 
 .tasks li.checked {
     color: #253a82;
     text-decoration: line-through;
     
-
     &::before {
         content: "";
         position: absolute;
@@ -245,7 +249,6 @@
     border-radius: 50%;
     border: 2px solid #253a82;
     background-color: transparent;
-
     cursor: pointer;
     left: 10px;
 
