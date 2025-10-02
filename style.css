@@ -235,6 +235,25 @@
     }
 }
 
+.tasks li{
+    overflow: scroll;
+    max-height: 150px;
+}
+
+/* .tasks li::-webkit-scrollbar {
+    width: 5px;
+
+}
+
+.tasks li::-webkit-scrollbar-thumb {
+    background: #253a82;
+    border-radius: 5px;
+}
+
+.tasks li::-webkit-scrollbar-track {
+    background-color: transparent;
+} */
+
 
 .tasks li,
 .unchecked{
