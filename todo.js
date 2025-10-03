@@ -52,6 +52,33 @@ function createTask (task) {
     const li = document.createElement("div"); // создаю таску
 
     li.textContent = task.textInput;
+
+    wrapperMainContainer.addEventListener('dblclick', function () { // редактирование таски
+        const editTask = document.createElement('input');
+        editTask.type = 'text';
+        editTask.value = task.textInput;
+        editTask.classList.add('edit-task');
+
+        wrapperMainContainer.replaceChild(editTask, li);
+        editTask.focus();
+
+        function saveEdit() {
+            const newValue = editTask.value;
+            if (newValue !== "") {
+                task.textInput = newValue;
+            }
+            filtered(defaultFilter); // Перерисовываем задачи
+        }
+
+        editTask.addEventListener('blur', saveEdit);
+
+        editTask.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                saveEdit();
+            }
+        });
+    });
+
     wrapperMainContainer.appendChild(li);
     
     const deleteBtn = document.createElement("button"); //создаю кнопку удаления 
@@ -106,8 +133,17 @@ function filtered (filter) {
     }
     sync(filteredList);
 }
+addBtn.addEventListener('click', addTask)
+inputText.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        addTask();
+    }
+});
 
-addBtn.addEventListener('click', addTask);
+inputText.addEventListener('dblclick', function() {
+    addTask();
+})
+
 
 closeModal.addEventListener('click', function () {
     modalWindow.classList.remove('open');
