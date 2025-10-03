@@ -198,8 +198,8 @@
     column-gap: 5px;
 }
 
-.form span img {
-    width: 20px;
+.form button img {
+    width: 15px;
 }
 
 .form input {
@@ -214,6 +214,7 @@
 
     &::placeholder {
         color: white;
+        font-style: italic;
         transition: opacity 0.2s;
     }
 }
@@ -229,6 +230,11 @@
 }
 
 .form button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 5px;
+
     border: none;
     outline: none;
     padding: 5px;
@@ -237,11 +243,23 @@
     font-weight: 700;
     cursor: pointer;
 
+    .plus_blue {
+        display: none;
+    }
+
     &:hover {
         background-color: aliceblue;
         border-radius: 10px;
         color: #253a82;
         transition: 0.3s;
+
+        .plus_blue {
+            display: flex;
+        }
+
+        .plus_white {
+            display: none;
+        }
     }
 }
 
