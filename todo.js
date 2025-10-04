@@ -121,6 +121,7 @@ function sync (filteredList) {
 }
 
 function filtered (filter) {
+
     defaultFilter = filter;
     localStorage.setItem('filter', filter);
 
@@ -130,6 +131,8 @@ function filtered (filter) {
         filteredList = taskList.filter(task => task.status); //если checked
     } else if (filter === "inProgress") {
         filteredList = taskList.filter(task => !task.status);
+    } else {
+        filteredList = taskList;
     }
     sync(filteredList);
 }
