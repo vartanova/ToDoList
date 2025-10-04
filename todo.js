@@ -50,6 +50,7 @@ function createTask (task) {
     wrapperMainContainer.classList.add('wrapperMainContainer')
     
     const li = document.createElement("div"); // создаю таску
+    li.classList.add('text-task');
 
     li.textContent = task.textInput;
 
@@ -102,9 +103,11 @@ function createTask (task) {
     wrapperMainContainer.appendChild(deleteBtn);
 
     if (task.status) {
-        li.classList.add('checked') // добавляю состояние таске
+        checkedBtn.classList.add('checked');
+        li.classList.add('checked'); // добавляю состояние таске
     } else {
-        li.classList.add('unchecked')
+        checkedBtn.classList.add('unchecked'); // изменить на ремув чекед
+        li.classList.add('unchecked');
     }
 
     return wrapperMainContainer;
