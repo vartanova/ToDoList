@@ -153,7 +153,13 @@ inputText.addEventListener('dblclick', function() {
 
 closeModal.addEventListener('click', function () {
     modalWindow.classList.remove('open');
-})
+});
+
+modalWindow.addEventListener('click', (event) => {
+    if (!modalContent.contains(event.target)) {
+        modalWindow.classList.remove('open');
+    }
+});
 
 all.addEventListener('click', function () {
     filtered('all');
