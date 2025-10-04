@@ -347,7 +347,6 @@
         background-size: cover;
         background-position: center center;
         opacity: 0;
-        left: -1px;
     }
 
     &:hover {
