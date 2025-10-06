@@ -139,9 +139,14 @@ function filtered (filter) {
     }
     sync(filteredList);
 }
-addBtn.addEventListener('click', addTask)
-inputText.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
+addBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    addTask();
+});
+
+inputText.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
         addTask();
     }
 });
@@ -155,8 +160,8 @@ closeModal.addEventListener('click', function () {
     modalWindow.classList.remove('open');
 });
 
-modalWindow.addEventListener('click', (event) => {
-    if (!modalContent.contains(event.target)) {
+modalWindow.addEventListener('click', (e) => {
+    if (!modalContent.contains(e.target)) {
         modalWindow.classList.remove('open');
     }
 });
